@@ -1,7 +1,7 @@
 ReadingTrack
 ============
 
-一款阅读进度记录软件，可以跟踪当前在读书进度。
+一款阅读进度记录软件，可以跟踪读书进度。
 
 ![screenshot](https://raw.githubusercontent.com/maxiee/ReadingTrack/master/screenshot.png "screenshot")
 
