@@ -29,8 +29,8 @@ class Form(QWidget):
         self.title_label = QLabel("Title:")
         self.add_date_label = QLabel("Add date:")
         self.page_count_label = QLabel("Page count:")
-        self.page_current_label = QLabel("Current read:")
-        self.read_times_label = QLabel("Read_times:")
+        self.page_current_label = QLabel("Currently read:")
+        self.read_times_label = QLabel("Read times:")
 
         self.giveup_button = QPushButton("Give Up")
 
