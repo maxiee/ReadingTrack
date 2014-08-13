@@ -1,6 +1,7 @@
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 import bookmodel
+import database
 import time
 
 class Form(QWidget):
@@ -12,6 +13,9 @@ class Form(QWidget):
                 bookmodel.Book("Book 1", time.time(), 0, 350, 0, False),
                 bookmodel.Book("Book 2", time.time(), 0, 400, 0, False),
                 bookmodel.Book("Book 3", time.time(), 0, 450, 0, False)]
+        # instantiate database
+        my_db = database.Database()
+        my_db.init()
 
         # UI Widget
         self.presentation_combo = QComboBox()
