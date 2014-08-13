@@ -23,3 +23,5 @@ class Database():
                         PAGECURRENT INT NOT NULL,
                         FINISHED INT NOT NULL);''')
 
+    def get_count(self):
+        return len(self.book_list)
