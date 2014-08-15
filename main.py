@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 import bookmodel
@@ -90,8 +92,9 @@ class Form(QWidget):
         new_dlg = dlgnew.NewDialog()
         if new_dlg.exec_() == QDialog.Accepted:
             print("New dialog OK!")
-            print("New title is:" + new_dlg.title)
-            print("It has :" + new_dlg.pages)
+            #print("New title is:" + new_dlg.title)
+            #print("It has :" + new_dlg.pages)
+            self.my_db.insert_a_book(new_dlg.title, new_dlg.pages)
         else:
             print("New dialog Cancel!")
 
