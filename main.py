@@ -22,8 +22,6 @@ class Form(QWidget):
         self.title_label = QLabel("Title:")
         self.add_date_label = QLabel("Add date:")
         self.page_count_label = QLabel("Page count:")
-        self.page_current_label = QLabel("Currently read:")
-        self.read_times_label = QLabel("Read times:")
 
         self.giveup_button = QPushButton("Give Up")
 
@@ -43,8 +41,6 @@ class Form(QWidget):
         top_two.addWidget(self.title_label)
         top_two.addWidget(self.add_date_label)
         top_two.addWidget(self.page_count_label)
-        top_two.addWidget(self.page_current_label)
-        top_two.addWidget(self.read_times_label)
         top_two_group = QGroupBox("Book on reading")
         top_two_group.setLayout(top_two)
 
@@ -69,9 +65,9 @@ class Form(QWidget):
 
         # Test: Suppose we have 3 books
         books = [
-                bookmodel.Book("Book 1", time.time(), 0, 350, 0, False),
-                bookmodel.Book("Book 2", time.time(), 0, 400, 0, False),
-                bookmodel.Book("Book 3", time.time(), 0, 450, 0, False)]
+                bookmodel.Book("Book 1", time.time(), 350, False),
+                bookmodel.Book("Book 2", time.time(), 400, False),
+                bookmodel.Book("Book 3", time.time(), 450, False)]
 
         # init book list
         for book in books:

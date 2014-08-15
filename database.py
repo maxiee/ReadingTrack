@@ -18,9 +18,7 @@ class Database():
                         (ID INT PRIMARY KEY NOT NULL,
                         TITLE TEXT NOT NULL,
                         DATE LONG NOT NULL,
-                        READTIMES INT NOT NULL,
                         PAGECOUNT INT NOT NULL,
-                        PAGECURRENT INT NOT NULL,
                         FINISHED INT NOT NULL);''')
 
     def get_count(self):
