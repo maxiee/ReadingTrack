@@ -19,7 +19,8 @@ class Form(QWidget):
         self.new_button.clicked.connect(self.new_pressed)
 
         self.books_list = QListWidget()
-        
+        self.books_list.currentRowChanged[int].connect(self.book_list_item_selected)
+
         self.title_label = QLabel("Title:")
         self.add_date_label = QLabel("Add date:")
         self.page_count_label = QLabel("Page count:")
@@ -73,9 +74,9 @@ class Form(QWidget):
         self.init_status()
 
     def init_booklist(self):
-        books = self.my_db.get_books(0)
+        self.books = self.my_db.get_books(0)
         self.books_list.clear()
-        for book in books:
+        for book in self.books:
             self.books_list.addItem(book[0])
         self.books_list.setFixedHeight(50)
 
@@ -94,6 +95,12 @@ class Form(QWidget):
             self.init_booklist()
         else:
             print("New dialog Cancel!")
+
+    def book_list_item_selected(self, index):
+        book = self.books[index]
+        self.title_label.setText("Title: " + book[0])
+        self.add_date_label.setText("Add date: " + time.ctime(book[1]))
+        self.page_count_label.setText("Page count: " + str(book[2]))
 
 if __name__ == '__main__':
     import sys
