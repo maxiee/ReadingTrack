@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 import bookmodel
@@ -26,10 +25,10 @@ class Form(QWidget):
         self.page_count_label = QLabel("Page count:")
 
         self.giveup_button = QPushButton("Give Up")
-
         self.finish_button = QPushButton("Finish")
 
         self.status_info = QLabel()
+
 
         # UI Layout
         main_layout = QVBoxLayout()
@@ -65,23 +64,20 @@ class Form(QWidget):
         # Set Title
         self.setWindowTitle("Reading Track")
 
-        # Test: Suppose we have 3 books
-        books = [
-                bookmodel.Book("Book 1", time.time(), 350, False),
-                bookmodel.Book("Book 2", time.time(), 400, False),
-                bookmodel.Book("Book 3", time.time(), 450, False)]
-
-        # init book list
-        for book in books:
-            self.books_list.addItem(book.title)
-        self.books_list.setFixedHeight(50)
-
-        # instantiate database
+        # Init database
         self.my_db = database.Database()
         self.my_db.init()
 
-        # UI init
+        # init
+        self.init_booklist()
         self.init_status()
+
+    def init_booklist(self):
+        books = self.my_db.get_books(0)
+        self.books_list.clear()
+        for book in books:
+            self.books_list.addItem(book[0])
+        self.books_list.setFixedHeight(50)
 
     def init_status(self):
         self.status_info.setText("Now you have " + 
@@ -95,6 +91,7 @@ class Form(QWidget):
             #print("New title is:" + new_dlg.title)
             #print("It has :" + new_dlg.pages)
             self.my_db.insert_a_book(new_dlg.title, new_dlg.pages)
+            self.init_booklist()
         else:
             print("New dialog Cancel!")
 
