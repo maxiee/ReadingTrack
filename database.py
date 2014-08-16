@@ -18,14 +18,14 @@ class Database():
             print("Create a new one...")
             self.conn = sqlite3.connect(constants.DB_NAME)
             self.conn.execute('''CREATE TABLE BOOK
-                        (ID INT PRIMARY KEY NOT NULL,
-                        TITLE TEXT NOT NULL,
+                        (TITLE TEXT NOT NULL,
                         DATE FLOAT NOT NULL,
                         PAGECOUNT INT NOT NULL,
                         FINISHED INT NOT NULL);''')
+
     def insert_a_book(self, title, page_count):
-        self.conn.execute("INSERT INTO BOOK VALUES (?, ?, ?, ?, ?)", 
-                ("NULL", title, time.time(), page_count, 0))
+        self.conn.execute("INSERT INTO BOOK(TITLE, DATE, PAGECOUNT, FINISHED) VALUES (?, ?, ?, ?)", 
+                (title, time.time(), page_count, 0))
         self.conn.commit()
 
     def get_count(self):
