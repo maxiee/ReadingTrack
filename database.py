@@ -19,11 +19,12 @@ class Database():
                         (TITLE TEXT NOT NULL,
                         DATE FLOAT NOT NULL,
                         PAGECOUNT INT NOT NULL,
+                        FINISHEDDATE FLOAT NOT NULL,
                         FINISHED INT NOT NULL);''')
 
     def insert_a_book(self, title, page_count):
-        self.conn.execute("INSERT INTO BOOK(TITLE, DATE, PAGECOUNT, FINISHED) VALUES (?, ?, ?, ?)", 
-                (title, time.time(), page_count, 0))
+        self.conn.execute("INSERT INTO BOOK(TITLE, DATE, PAGECOUNT, FINISHEDDATE, FINISHED) VALUES (?, ?, ?, ?, ?)", 
+                (title, time.time(), page_count, 0, 0))
         self.conn.commit()
 
     def get_books(self, finished):
