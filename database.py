@@ -8,8 +8,6 @@ import time
 class Database():
     def __init__(self):
         self.book_list = []
-    
-    def init(self):
         if os.path.isfile(constants.DB_NAME):
             print("Found database: " + constants.DB_NAME)
             self.conn = sqlite3.connect(constants.DB_NAME)

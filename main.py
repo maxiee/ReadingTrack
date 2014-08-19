@@ -67,7 +67,6 @@ class Form(QWidget):
 
         # Init database
         self.my_db = database.Database()
-        self.my_db.init()
 
         # init
         self.init_booklist()
