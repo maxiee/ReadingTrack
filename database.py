@@ -27,6 +27,10 @@ class Database():
                 (title, time.time(), page_count, 0, 0))
         self.conn.commit()
 
+    def remove_a_book(self, index):
+        self.conn.execute("DELETE FROM BOOK WHERE rowid=?", (index, ))
+        self.conn.commit()
+
     def get_books(self, finished):
         self.book_list = self.conn.execute("SELECT * FROM BOOK WHERE FINISHED=?", (finished, )).fetchall()
         return self.book_list

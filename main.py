@@ -26,6 +26,7 @@ class Form(QWidget):
         self.page_count_label = QLabel("Page count:")
 
         self.giveup_button = QPushButton("Give Up")
+        self.giveup_button.clicked.connect(self.give_up_pressed)
         self.finish_button = QPushButton("Finish")
 
         self.status_info = QLabel()
@@ -100,6 +101,11 @@ class Form(QWidget):
         self.title_label.setText("Title: " + book[0])
         self.add_date_label.setText("Add date: " + time.ctime(book[1]))
         self.page_count_label.setText("Page count: " + str(book[2]))
+
+    def give_up_pressed(self):
+        current_selected = self.books_list.currentRow() + 1
+        self.my_db.remove_a_book(current_selected)
+        self.init_booklist()
 
 if __name__ == '__main__':
     import sys
