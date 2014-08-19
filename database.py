@@ -27,7 +27,8 @@ class Database():
         self.conn.commit()
 
     def get_books(self, finished):
-        return self.conn.execute("SELECT * FROM BOOK WHERE FINISHED=?", (finished, )).fetchall()
+        self.book_list = self.conn.execute("SELECT * FROM BOOK WHERE FINISHED=?", (finished, )).fetchall()
+        return self.book_list
 
     def get_count(self):
         return len(self.book_list)
