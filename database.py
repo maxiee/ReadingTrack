@@ -16,7 +16,8 @@ class Database():
             print("Create a new one...")
             self.conn = sqlite3.connect(constants.DB_NAME)
             self.conn.execute('''CREATE TABLE BOOK
-                        (TITLE TEXT NOT NULL,
+                        (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        TITLE TEXT NOT NULL,
                         DATE FLOAT NOT NULL,
                         PAGECOUNT INT NOT NULL,
                         FINISHEDDATE FLOAT NOT NULL,
@@ -28,7 +29,11 @@ class Database():
         self.conn.commit()
 
     def remove_a_book(self, index):
-        self.conn.execute("DELETE FROM BOOK WHERE rowid=?", (index, ))
+        self.conn.execute("DELETE FROM BOOK WHERE rowid=?", (self.book_list[index][0], ))
+        self.conn.commit()
+
+    def finished_read(self, index):
+        self.conn.execute("UPDATE BOOK SET FINISHED=1 WHERE rowid=?", (self.book_list[index][0], ))
         self.conn.commit()
 
     def get_books(self, finished):

@@ -1,3 +1,6 @@
+# DEBUG Switch
+DEBUG = True
+
 # presentation mode
 READING = 0
 READED = 1

@@ -5,6 +5,7 @@ import bookmodel
 import database
 import dlgnew
 import time
+import constants
 
 class Form(QWidget):
     def __init__(self, parent = None):
@@ -28,6 +29,7 @@ class Form(QWidget):
         self.giveup_button = QPushButton("Give Up")
         self.giveup_button.clicked.connect(self.give_up_pressed)
         self.finish_button = QPushButton("Finish")
+        self.finish_button.clicked.connect(self.finish_pressed)
 
         self.status_info = QLabel()
 
@@ -77,7 +79,7 @@ class Form(QWidget):
         self.books = self.my_db.get_books(0)
         self.books_list.clear()
         for book in self.books:
-            self.books_list.addItem(book[0])
+            self.books_list.addItem(book[1])
         self.books_list.setFixedHeight(50)
 
     def init_status(self):
@@ -98,13 +100,20 @@ class Form(QWidget):
 
     def book_list_item_selected(self, index):
         book = self.books[index]
-        self.title_label.setText("Title: " + book[0])
-        self.add_date_label.setText("Add date: " + time.ctime(book[1]))
-        self.page_count_label.setText("Page count: " + str(book[2]))
+        self.title_label.setText("Title: " + book[1])
+        self.add_date_label.setText("Add date: " + time.ctime(book[2]))
+        self.page_count_label.setText("Page count: " + str(book[3]))
 
     def give_up_pressed(self):
-        current_selected = self.books_list.currentRow() + 1
+        current_selected = self.books_list.currentRow()
         self.my_db.remove_a_book(current_selected)
+        self.init_booklist()
+
+    def finish_pressed(self):
+        current_selected = self.books_list.currentRow()
+        if constants.DEBUG:
+            print("[DEBUG]Current selected is " + str(current_selected))
+        self.my_db.finished_read(current_selected)
         self.init_booklist()
 
 if __name__ == '__main__':
