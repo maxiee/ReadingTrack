@@ -15,6 +15,7 @@ class Form(QWidget):
         self.presentation_combo = QComboBox()
         self.presentation_combo.addItem("Reading")
         self.presentation_combo.addItem("Finish Read")
+        self.presentation_combo.currentIndexChanged[int].connect(self.presentation_combo_pressed)
 
         self.new_button = QPushButton("New")
         self.new_button.clicked.connect(self.new_pressed)
@@ -75,11 +76,11 @@ class Form(QWidget):
         self.my_db = database.Database()
 
         # init
-        self.init_booklist()
+        self.init_booklist(constants.READING)
         self.init_status()
 
-    def init_booklist(self):
-        self.books = self.my_db.get_books(0)
+    def init_booklist(self, finished):
+        self.books = self.my_db.get_books(finished)
         self.books_list.clear()
         for book in self.books:
             self.books_list.addItem(book[1])
@@ -97,7 +98,7 @@ class Form(QWidget):
             #print("New title is:" + new_dlg.title)
             #print("It has :" + new_dlg.pages)
             self.my_db.insert_a_book(new_dlg.title, new_dlg.pages)
-            self.init_booklist()
+            self.init_booklist(constants.READING)
         else:
             print("New dialog Cancel!")
 
@@ -110,14 +111,25 @@ class Form(QWidget):
     def give_up_pressed(self):
         current_selected = self.books_list.currentRow()
         self.my_db.remove_a_book(current_selected)
-        self.init_booklist()
+        self.init_booklist(constants.READING)
 
     def finish_pressed(self):
         current_selected = self.books_list.currentRow()
         if constants.DEBUG:
             print("[DEBUG]Current selected is " + str(current_selected))
         self.my_db.finished_read(current_selected)
-        self.init_booklist()
+        self.init_booklist(constants.READING)
+
+    def presentation_combo_pressed(self, index):
+        if index == self.current_page:
+            return
+        self.current_page = index
+        if index == constants.READING:
+            self.init_booklist(constants.READING)
+            return
+        if index == constants.READED:
+            self.init_booklist(constants.READED)
+
 
 if __name__ == '__main__':
     import sys
