@@ -21,7 +21,9 @@ class Database():
                         DATE FLOAT NOT NULL,
                         PAGECOUNT INT NOT NULL,
                         FINISHEDDATE FLOAT NOT NULL,
-                        FINISHED INT NOT NULL);''')
+                        FINISHED INT NOT NULL,
+                        RANK INT DEFAULT 0,
+                        REVIEW TEXT DEFAULT "");''')
 
     def insert_a_book(self, title, page_count):
         self.conn.execute("INSERT INTO BOOK(TITLE, DATE, PAGECOUNT, FINISHEDDATE, FINISHED) VALUES (?, ?, ?, ?, ?)", 
