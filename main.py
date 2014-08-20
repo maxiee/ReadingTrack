@@ -68,6 +68,9 @@ class Form(QWidget):
         # Set Title
         self.setWindowTitle("Reading Track")
 
+        # Represent current is on reading or finish read
+        self.current_page = constants.READING
+
         # Init database
         self.my_db = database.Database()
 
