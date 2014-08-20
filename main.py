@@ -27,6 +27,9 @@ class Form(QWidget):
         self.title_label = QLabel("Title:")
         self.add_date_label = QLabel("Add date:")
         self.page_count_label = QLabel("Page count:")
+        self.finish_date_label = QLabel("Finished date:")
+        self.rank_label = QLabel("Rank:")
+        self.review_label = QLabel("Review:")
 
         self.giveup_button = QPushButton("Give Up")
         self.giveup_button.clicked.connect(self.give_up_pressed)
@@ -35,8 +38,10 @@ class Form(QWidget):
 
         self.status_info = QLabel()
 
+        # Represent current is on reading or finish read
+        self.current_page = constants.READING
 
-        # UI Layout
+        # Init Layout
         main_layout = QVBoxLayout()
 
         top_one = QHBoxLayout()
@@ -48,30 +53,43 @@ class Form(QWidget):
         top_two.addWidget(self.title_label)
         top_two.addWidget(self.add_date_label)
         top_two.addWidget(self.page_count_label)
-        top_two_group = QGroupBox("Book on reading")
-        top_two_group.setLayout(top_two)
+        self.top_two_group = QGroupBox("Books on reading")
+        self.top_two_group.setLayout(top_two)
 
-        top_three = QHBoxLayout()
-        top_three.addWidget(self.giveup_button)
-        top_three.addStretch()
-        top_three.addWidget(self.finish_button)
+        top_three = QVBoxLayout()
+        top_three.addWidget(self.title_label)
+        top_three.addWidget(self.add_date_label)
+        top_three.addWidget(self.finish_date_label)
+        top_three.addWidget(self.rank_label)
+        top_three.addWidget(self.review_label)
+        self.top_three_group = QGroupBox("Books Finished Read")
+        self.top_three_group.setLayout(top_three)
 
+        self.top_four = QHBoxLayout()
+        self.top_four.addWidget(self.giveup_button)
+        self.top_four.addStretch()
+        self.top_four.addWidget(self.finish_button)
+        self.top_four_widget = QWidget()
+        self.top_four_widget.setLayout(self.top_four)
 
         # Add sub layouts and widgets to main_layout
         main_layout.addLayout(top_one)
         main_layout.addWidget(self.books_list)
-        main_layout.addWidget(top_two_group)
-        main_layout.addLayout(top_three)
+        main_layout.addWidget(self.top_two_group)
+        main_layout.addWidget(self.top_three_group)
+        main_layout.addWidget(self.top_four_widget)
         main_layout.addWidget(self.status_info)
+
+        self.init_layout(self.current_page)
 
         # Set Layout
         self.setLayout(main_layout)
+        self.setLayout
 
+        self.init_layout(self.current_page)
+        
         # Set Title
         self.setWindowTitle("Reading Track")
-
-        # Represent current is on reading or finish read
-        self.current_page = constants.READING
 
         # Init database
         self.my_db = database.Database()
@@ -80,6 +98,16 @@ class Form(QWidget):
         self.init_booklist(constants.READING)
         self.init_status()
 
+    def init_layout(self, current_page):
+        if current_page == constants.READING:
+            self.top_three_group.hide()
+            self.top_two_group.show()
+            self.top_four_widget.show()
+        if current_page == constants.READED:
+            self.top_three_group.show()
+            self.top_two_group.hide()
+            self.top_four_widget.hide()
+            
     def init_booklist(self, finished):
         self.books = self.my_db.get_books(finished)
         self.books_list.clear()
@@ -133,9 +161,11 @@ class Form(QWidget):
             return
         self.current_page = index
         if index == constants.READING:
+            self.init_layout(constants.READING)
             self.init_booklist(constants.READING)
             return
         if index == constants.READED:
+            self.init_layout(constants.READED)
             self.init_booklist(constants.READED)
 
 
