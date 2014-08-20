@@ -12,7 +12,9 @@ class FinishDialog(QDialog):
         review_label = QLabel("Review:")
         self.review_edit = QTextEdit()
         finish_button = QPushButton("Finish")
+        finish_button.clicked.connect(self.finish_pressed)
         cancel_button = QPushButton("Cancel")
+        cancel_button.clicked.connect(self.cancel_pressed)
 
         # UI Layout
         layout = QGridLayout()
@@ -28,3 +30,14 @@ class FinishDialog(QDialog):
 
         # Set title
         self.setWindowTitle("Rank the book")
+
+        # Field
+        self.rank = 0
+        self.review = ""
+
+    def finish_pressed(self):
+        self.rank = int(self.rank_combo.currentText())
+        self.review = self.review_edit.toPlainText()
+        self.accept()
+    def cancel_pressed(self):
+        self.reject()
