@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import *
 import bookmodel
 import database
 import dlgnew
+import dlgfinish
 import time
 import constants
 
@@ -114,11 +115,18 @@ class Form(QWidget):
         self.init_booklist(constants.READING)
 
     def finish_pressed(self):
-        current_selected = self.books_list.currentRow()
-        if constants.DEBUG:
-            print("[DEBUG]Current selected is " + str(current_selected))
-        self.my_db.finished_read(current_selected)
-        self.init_booklist(constants.READING)
+        finish_dialog = dlgfinish.FinishDialog()
+        if finish_dialog.exec_() == QDialog.Accepted:
+            current_selected = self.books_list.currentRow()
+            if constants.DEBUG:
+                #print("rank:" + str(finish_dialog.rank))
+                #print("review:" + finish_dialog.review)
+                print("[DEBUG]Current selected is " + str(current_selected))
+            self.my_db.finished_read(
+                    current_selected,
+                    finish_dialog.rank,
+                    finish_dialog.review)
+            self.init_booklist(constants.READING)
 
     def presentation_combo_pressed(self, index):
         if index == self.current_page:

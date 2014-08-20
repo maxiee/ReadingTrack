@@ -34,8 +34,10 @@ class Database():
         self.conn.execute("DELETE FROM BOOK WHERE rowid=?", (self.book_list[index][0], ))
         self.conn.commit()
 
-    def finished_read(self, index):
-        self.conn.execute("UPDATE BOOK SET FINISHED=1 WHERE rowid=?", (self.book_list[index][0], ))
+    def finished_read(self, index, rank, review):
+        self.conn.execute(
+                "UPDATE BOOK SET FINISHED=1, FINISHEDDATE=?, RANK=?, REVIEW=? WHERE rowid=?", 
+                (time.time(), rank, review, self.book_list[index][0], ))
         self.conn.commit()
 
     def get_books(self, finished):
