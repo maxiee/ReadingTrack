@@ -37,6 +37,7 @@ class ReadedWindow(QWidget):
         top_two.addWidget(self.title_label)
         top_two.addWidget(self.add_date_label)
         top_two.addWidget(self.finish_date_label)
+        top_two.addWidget(self.page_count_label)
         top_two.addWidget(self.rank_label)
         top_two.addWidget(self.review_label)
         self.top_two_group = QGroupBox("Books Finished Read")
@@ -88,4 +89,8 @@ class ReadedWindow(QWidget):
         book = self.books[index]
         self.title_label.setText("Title: " + book[1])
         self.add_date_label.setText("Add date: " + time.ctime(book[2]))
+        self.finish_date_label.setText("Finished date: " + time.ctime(book[4]))
         self.page_count_label.setText("Page count: " + str(book[3]))
+        self.rank_label.setText("Rank: " + str(book[6]))
+        self.review_label.setText("Review: " + book[7])
+
