@@ -3,9 +3,8 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 import constants
 import database
-import time
 
-class OnReadingWindow(QWidget):
+class ReadedWindow(QtWidget):
     def __init__(self, parent = None):
         QWidget.__init__(self, parent)
 
@@ -23,11 +22,6 @@ class OnReadingWindow(QWidget):
         self.rank_label = QLabel("Rank:")
         self.review_label = QLabel("Review:")
 
-        self.giveup_button = QPushButton("Give Up")
-        self.giveup_button.clicked.connect(self.give_up_pressed)
-        self.finish_button = QPushButton("Finish")
-        self.finish_button.clicked.connect(self.finish_pressed)
-
         self.status_info = QLabel()
 
         # Represent current is on reading or finish read
@@ -43,28 +37,24 @@ class OnReadingWindow(QWidget):
         top_two = QVBoxLayout()
         top_two.addWidget(self.title_label)
         top_two.addWidget(self.add_date_label)
-        top_two.addWidget(self.page_count_label)
-        self.top_two_group = QGroupBox("Books on reading")
-        self.top_two_group.setLayout(top_two)
-
-        self.top_four = QHBoxLayout()
-        self.top_four.addWidget(self.giveup_button)
-        self.top_four.addStretch()
-        self.top_four.addWidget(self.finish_button)
-        self.top_four_widget = QWidget()
-        self.top_four_widget.setLayout(self.top_four)
+        top_two.addWidget(self.finish_date_label)
+        top_two.addWidget(self.rank_label)
+        top_two.addWidget(self.review_label)
+        self.top_two = QGroupBox("Books Finished Read")
+        self.top_two.setLayout(top_three)
 
         # Add sub layouts and widgets to main_layout
         main_layout.addLayout(top_one)
         main_layout.addWidget(self.books_list)
         main_layout.addWidget(self.top_two_group)
-        main_layout.addWidget(self.top_four_widget)
         main_layout.addWidget(self.status_info)
 
         # Set Layout
         self.setLayout(main_layout)
         self.setLayout
 
+        self.init_layout(self.current_page)
+        
         # Set Title
         self.setWindowTitle("Reading Track")
 
