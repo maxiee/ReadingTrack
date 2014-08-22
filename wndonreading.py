@@ -4,10 +4,9 @@ from PyQt5.QtWidgets import *
 import constants
 import database
 import time
-import dlgnew
-import dlgfinish
 
 class OnReadingWindow(QWidget):
+    status = pyqtSignal(['QString'])
     def __init__(self, parent = None):
         QWidget.__init__(self, parent)
 
@@ -79,7 +78,7 @@ class OnReadingWindow(QWidget):
         self.books_list.setFixedHeight(50)
 
     def init_status(self):
-        self.status_info.setText("Now you have " + 
+        self.status.emit("Now you have " + 
                 str(self.my_db.get_count()) + 
                 " books on reading...")
 
