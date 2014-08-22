@@ -10,7 +10,7 @@ class MainWindow(QMainWindow):
         
         on_reading_action = QAction("On Reading", self)
         on_reading_action.triggered.connect(self.on_reading_mode_selected)
-        readed_action = QAction("Reded", self)
+        readed_action = QAction("Readed", self)
         readed_action.triggered.connect(self.readed_mode_selected)
 
         mode_menu = self.menuBar().addMenu("mode")
