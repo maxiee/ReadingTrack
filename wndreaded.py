@@ -3,8 +3,10 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 import constants
 import database
+import dlgnew
+import time
 
-class ReadedWindow(QtWidget):
+class ReadedWindow(QWidget):
     def __init__(self, parent = None):
         QWidget.__init__(self, parent)
 
@@ -24,9 +26,6 @@ class ReadedWindow(QtWidget):
 
         self.status_info = QLabel()
 
-        # Represent current is on reading or finish read
-        self.current_page = constants.READING
-
         # Init Layout
         main_layout = QVBoxLayout()
 
@@ -40,8 +39,8 @@ class ReadedWindow(QtWidget):
         top_two.addWidget(self.finish_date_label)
         top_two.addWidget(self.rank_label)
         top_two.addWidget(self.review_label)
-        self.top_two = QGroupBox("Books Finished Read")
-        self.top_two.setLayout(top_three)
+        self.top_two_group = QGroupBox("Books Finished Read")
+        self.top_two_group.setLayout(top_two)
 
         # Add sub layouts and widgets to main_layout
         main_layout.addLayout(top_one)
@@ -51,10 +50,7 @@ class ReadedWindow(QtWidget):
 
         # Set Layout
         self.setLayout(main_layout)
-        self.setLayout
 
-        self.init_layout(self.current_page)
-        
         # Set Title
         self.setWindowTitle("Reading Track")
 
@@ -62,7 +58,7 @@ class ReadedWindow(QtWidget):
         self.my_db = database.Database()
 
         # init
-        self.init_booklist(constants.READING)
+        self.init_booklist(constants.READED)
         self.init_status()
 
     def init_booklist(self, finished):
@@ -93,22 +89,3 @@ class ReadedWindow(QtWidget):
         self.title_label.setText("Title: " + book[1])
         self.add_date_label.setText("Add date: " + time.ctime(book[2]))
         self.page_count_label.setText("Page count: " + str(book[3]))
-
-    def give_up_pressed(self):
-        current_selected = self.books_list.currentRow()
-        self.my_db.remove_a_book(current_selected)
-        self.init_booklist(constants.READING)
-
-    def finish_pressed(self):
-        finish_dialog = dlgfinish.FinishDialog()
-        if finish_dialog.exec_() == QDialog.Accepted:
-            current_selected = self.books_list.currentRow()
-            if constants.DEBUG:
-                #print("rank:" + str(finish_dialog.rank))
-                #print("review:" + finish_dialog.review)
-                print("[DEBUG]Current selected is " + str(current_selected))
-            self.my_db.finished_read(
-                    current_selected,
-                    finish_dialog.rank,
-                    finish_dialog.review)
-            self.init_booklist(constants.READING)

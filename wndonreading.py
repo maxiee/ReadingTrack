@@ -4,6 +4,8 @@ from PyQt5.QtWidgets import *
 import constants
 import database
 import time
+import dlgnew
+import dlgfinish
 
 class OnReadingWindow(QWidget):
     def __init__(self, parent = None):
@@ -20,8 +22,6 @@ class OnReadingWindow(QWidget):
         self.add_date_label = QLabel("Add date:")
         self.page_count_label = QLabel("Page count:")
         self.finish_date_label = QLabel("Finished date:")
-        self.rank_label = QLabel("Rank:")
-        self.review_label = QLabel("Review:")
 
         self.giveup_button = QPushButton("Give Up")
         self.giveup_button.clicked.connect(self.give_up_pressed)
@@ -29,9 +29,6 @@ class OnReadingWindow(QWidget):
         self.finish_button.clicked.connect(self.finish_pressed)
 
         self.status_info = QLabel()
-
-        # Represent current is on reading or finish read
-        self.current_page = constants.READING
 
         # Init Layout
         main_layout = QVBoxLayout()
@@ -63,7 +60,6 @@ class OnReadingWindow(QWidget):
 
         # Set Layout
         self.setLayout(main_layout)
-        self.setLayout
 
         # Set Title
         self.setWindowTitle("Reading Track")
