@@ -6,7 +6,6 @@ import database
 import time
 
 class OnReadingWindow(QWidget):
-    status = pyqtSignal(['QString'])
     def __init__(self, parent = None):
         QWidget.__init__(self, parent)
 
@@ -26,8 +25,6 @@ class OnReadingWindow(QWidget):
         self.giveup_button.clicked.connect(self.give_up_pressed)
         self.finish_button = QPushButton("Finish")
         self.finish_button.clicked.connect(self.finish_pressed)
-
-        self.status_info = QLabel()
 
         # Init Layout
         main_layout = QVBoxLayout()
@@ -55,7 +52,6 @@ class OnReadingWindow(QWidget):
         main_layout.addWidget(self.books_list)
         main_layout.addWidget(self.top_two_group)
         main_layout.addWidget(self.top_four_widget)
-        main_layout.addWidget(self.status_info)
 
         # Set Layout
         self.setLayout(main_layout)
@@ -68,7 +64,6 @@ class OnReadingWindow(QWidget):
 
         # init
         self.init_booklist(constants.READING)
-        self.init_status()
 
     def init_booklist(self, finished):
         self.books = self.my_db.get_books(finished)
@@ -77,10 +72,10 @@ class OnReadingWindow(QWidget):
             self.books_list.addItem(book[1])
         self.books_list.setFixedHeight(50)
 
-    def init_status(self):
-        self.status.emit("Now you have " + 
-                str(self.my_db.get_count()) + 
-                " books on reading...")
+    def get_status_message(self):
+        return "Now you have " + \
+                str(self.my_db.get_count()) + \
+                " books on reading..."
 
     def new_pressed(self):
         new_dlg = dlgnew.NewDialog()

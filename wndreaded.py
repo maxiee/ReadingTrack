@@ -24,8 +24,6 @@ class ReadedWindow(QWidget):
         self.rank_label = QLabel("Rank:")
         self.review_label = QLabel("Review:")
 
-        self.status_info = QLabel()
-
         # Init Layout
         main_layout = QVBoxLayout()
 
@@ -47,7 +45,6 @@ class ReadedWindow(QWidget):
         main_layout.addLayout(top_one)
         main_layout.addWidget(self.books_list)
         main_layout.addWidget(self.top_two_group)
-        main_layout.addWidget(self.status_info)
 
         # Set Layout
         self.setLayout(main_layout)
@@ -60,7 +57,6 @@ class ReadedWindow(QWidget):
 
         # init
         self.init_booklist(constants.READED)
-        self.init_status()
 
     def init_booklist(self, finished):
         self.books = self.my_db.get_books(finished)
@@ -69,10 +65,10 @@ class ReadedWindow(QWidget):
             self.books_list.addItem(book[1])
         self.books_list.setFixedHeight(50)
 
-    def init_status(self):
-        self.status_info.setText("Now you have " + 
-                str(self.my_db.get_count()) + 
-                " books on reading...")
+    def get_status_message(self):
+        return "Now you have read " + \
+                str(self.my_db.get_count()) + \
+                " books!"
 
     def new_pressed(self):
         new_dlg = dlgnew.NewDialog()

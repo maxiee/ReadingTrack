@@ -13,7 +13,7 @@ class MainWindow(QMainWindow):
         readed_action = QAction("Readed", self)
         readed_action.triggered.connect(self.readed_mode_selected)
         
-        self.setStatusBar(QStatusBar())
+        self.statusBar().showMessage("Hello!")
 
         mode_menu = self.menuBar().addMenu("mode")
         mode_menu.addAction(on_reading_action)
@@ -22,15 +22,17 @@ class MainWindow(QMainWindow):
         #TODO: add a flag variable to indicate current window.
         #      prevent load the same window again.
         self.main_window = wndonreading.OnReadingWindow(self)
-        self.main_window.status[str].connect(self.statusBar().showMessage)
+        self.statusBar().showMessage(self.main_window.get_status_message())
         self.setCentralWidget(self.main_window)
 
     def on_reading_mode_selected(self):
         self.main_window = wndonreading.OnReadingWindow(self)
+        self.statusBar().showMessage(self.main_window.get_status_message())
         self.setCentralWidget(self.main_window)
 
     def readed_mode_selected(self):
         self.main_window = wndreaded.ReadedWindow(self)
+        self.statusBar().showMessage(self.main_window.get_status_message())
         self.setCentralWidget(self.main_window)
 
 if __name__ == '__main__':
