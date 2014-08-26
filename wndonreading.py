@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import *
 import constants
 import database
 import time
+import dlgnew
 
 class OnReadingWindow(QWidget):
     def __init__(self, parent = None):
@@ -70,7 +71,7 @@ class OnReadingWindow(QWidget):
         self.books_list.clear()
         for book in self.books:
             self.books_list.addItem(book[1])
-        self.books_list.setFixedHeight(50)
+        self.books_list.setFixedHeight(80)
 
     def get_status_message(self):
         return "Now you have " + \
