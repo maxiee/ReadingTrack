@@ -23,7 +23,8 @@ class Database():
                         FINISHEDDATE FLOAT NOT NULL,
                         FINISHED INT NOT NULL,
                         RANK INT DEFAULT 0,
-                        REVIEW TEXT DEFAULT "");''')
+                        REVIEW TEXT DEFAULT "",
+                        READTIME LONG DEFAULT 0);''')
 
     def insert_a_book(self, title, page_count):
         self.conn.execute("INSERT INTO BOOK(TITLE, DATE, PAGECOUNT, FINISHEDDATE, FINISHED) VALUES (?, ?, ?, ?, ?)", 
