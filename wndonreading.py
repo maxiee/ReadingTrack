@@ -14,6 +14,8 @@ class OnReadingWindow(QWidget):
         self.new_button = QPushButton("New")
         self.new_button.clicked.connect(self.new_pressed)
 
+        list_tips_label = QLabel("Select a book to read:")
+
         self.books_list = QListWidget()
         self.books_list.currentRowChanged[int].connect(self.book_list_item_selected)
 
@@ -24,8 +26,7 @@ class OnReadingWindow(QWidget):
 
         self.giveup_button = QPushButton("Give Up")
         self.giveup_button.clicked.connect(self.give_up_pressed)
-        self.finish_button = QPushButton("Finish")
-        self.finish_button.clicked.connect(self.finish_pressed)
+        self.beagin_read_button = QPushButton("Read it")
 
         # Init Layout
         main_layout = QVBoxLayout()
@@ -38,21 +39,20 @@ class OnReadingWindow(QWidget):
         top_two.addWidget(self.title_label)
         top_two.addWidget(self.add_date_label)
         top_two.addWidget(self.page_count_label)
-        self.top_two_group = QGroupBox("Books on reading")
+        self.top_two_group = QGroupBox("Select a book to read:")
         self.top_two_group.setLayout(top_two)
 
         self.top_four = QHBoxLayout()
         self.top_four.addWidget(self.giveup_button)
         self.top_four.addStretch()
-        self.top_four.addWidget(self.finish_button)
-        self.top_four_widget = QWidget()
-        self.top_four_widget.setLayout(self.top_four)
+        self.top_four.addWidget(self.beagin_read_button)
 
         # Add sub layouts and widgets to main_layout
         main_layout.addLayout(top_one)
+        main_layout.addWidget(list_tips_label)
         main_layout.addWidget(self.books_list)
         main_layout.addWidget(self.top_two_group)
-        main_layout.addWidget(self.top_four_widget)
+        main_layout.addLayout(self.top_four)
 
         # Set Layout
         self.setLayout(main_layout)
@@ -97,6 +97,7 @@ class OnReadingWindow(QWidget):
         self.my_db.remove_a_book(current_selected)
         self.init_booklist(constants.READING)
 
+    #TODO:remove this function
     def finish_pressed(self):
         finish_dialog = dlgfinish.FinishDialog()
         if finish_dialog.exec_() == QDialog.Accepted:
