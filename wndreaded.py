@@ -49,9 +49,6 @@ class ReadedWindow(QWidget):
         # Set Layout
         self.setLayout(main_layout)
 
-        # Set Title
-        self.setWindowTitle("Reading Track")
-
         # Init database
         self.my_db = database.Database()
 

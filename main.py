@@ -21,16 +21,22 @@ class MainWindow(QMainWindow):
 
         #TODO: add a flag variable to indicate current window.
         #      prevent load the same window again.
+        # Set Title
+        self.setWindowTitle("Books On Reading")
         self.main_window = wndonreading.OnReadingWindow(self)
         self.statusBar().showMessage(self.main_window.get_status_message())
         self.setCentralWidget(self.main_window)
 
     def on_reading_mode_selected(self):
+        # Set Title
+        self.setWindowTitle("Books On Reading")
         self.main_window = wndonreading.OnReadingWindow(self)
         self.statusBar().showMessage(self.main_window.get_status_message())
         self.setCentralWidget(self.main_window)
 
     def readed_mode_selected(self):
+        # Set Title
+        self.setWindowTitle("Books Read")
         self.main_window = wndreaded.ReadedWindow(self)
         self.statusBar().showMessage(self.main_window.get_status_message())
         self.setCentralWidget(self.main_window)
