@@ -7,6 +7,8 @@ import time
 import dlgnew
 
 class OnReadingWindow(QWidget):
+    begin_read_signal = pyqtSignal([int])
+
     def __init__(self, parent = None):
         QWidget.__init__(self, parent)
 
@@ -24,9 +26,10 @@ class OnReadingWindow(QWidget):
         self.page_count_label = QLabel("Page count:")
         self.finish_date_label = QLabel("Finished date:")
 
-        self.giveup_button = QPushButton("Give Up")
+        self.giveup_button = QPushButton("放弃")
         self.giveup_button.clicked.connect(self.give_up_pressed)
-        self.beagin_read_button = QPushButton("Read it")
+        self.begin_read_button = QPushButton("开始读")
+        self.begin_read_button.clicked.connect(self.begin_read_pressed)
 
         # Init Layout
         main_layout = QVBoxLayout()
@@ -39,13 +42,13 @@ class OnReadingWindow(QWidget):
         top_two.addWidget(self.title_label)
         top_two.addWidget(self.add_date_label)
         top_two.addWidget(self.page_count_label)
-        self.top_two_group = QGroupBox("Select a book to read:")
+        self.top_two_group = QGroupBox("读书进度:")
         self.top_two_group.setLayout(top_two)
 
         self.top_four = QHBoxLayout()
         self.top_four.addWidget(self.giveup_button)
         self.top_four.addStretch()
-        self.top_four.addWidget(self.beagin_read_button)
+        self.top_four.addWidget(self.begin_read_button)
 
         # Add sub layouts and widgets to main_layout
         main_layout.addLayout(top_one)
@@ -111,3 +114,6 @@ class OnReadingWindow(QWidget):
                     finish_dialog.rank,
                     finish_dialog.review)
             self.init_booklist(constants.READING)
+
+    def begin_read_pressed(self):
+        self.begin_read_signal.emit(0)
