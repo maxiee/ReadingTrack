@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import *
 import wndonreading
 import wndhaveread
 import wndonreadingone
+import constants
 
 class MainWindow(QMainWindow):
     def __init__(self, parent = None):
@@ -33,11 +34,13 @@ class MainWindow(QMainWindow):
         self.statusBar().showMessage(self.main_window.get_status_message())
         self.setCentralWidget(self.main_window)
     
-    def on_reading_one_mode_selected(self):
+    def on_reading_one_mode_selected(self, book_selected_id):
         # Set Title
         self.setWindowTitle("正在阅读一本书")
+        print("CCCCCCC" + str(book_selected_id))
         self.main_window = wndonreadingone.WndOnReadingOne(self)
-        #self.statusBar().showMessage(
+        self.main_window.book_id = book_selected_id
+        self.main_window.init_book_title()
         self.setCentralWidget(self.main_window)
 
     def have_read_mode_selected(self):
@@ -50,7 +53,11 @@ class MainWindow(QMainWindow):
     def switch_window(self, index):
         print("Ouch! WTF!!!!")
         if index == 0:
-            self.on_reading_one_mode_selected()
+            book_selected_id = self.main_window.book_selected_id
+            if constants.DEBUG:
+                print("Book selected ID is: " + str(book_selected_id))
+            self.on_reading_one_mode_selected(book_selected_id)
+            
 
 if __name__ == '__main__':
     import sys

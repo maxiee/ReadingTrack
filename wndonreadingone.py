@@ -6,6 +6,10 @@ import database
 import time
 
 class WndOnReadingOne(QWidget):
+    book_id = -1
+    # Init database
+    my_db = database.Database()
+
     def __init__(self, parent = None):
         QWidget.__init__(self, parent)
     
@@ -58,3 +62,7 @@ class WndOnReadingOne(QWidget):
 
         # Set Layout
         self.setLayout(main_layout)
+
+    def init_book_title(self):
+        self.title.setText(self.my_db.get_book(self.book_id))
+        print(self.my_db.get_book(self.book_id))

@@ -8,6 +8,7 @@ import dlgnew
 
 class OnReadingWindow(QWidget):
     begin_read_signal = pyqtSignal([int])
+    book_selected_id = -1
 
     def __init__(self, parent = None):
         QWidget.__init__(self, parent)
@@ -116,4 +117,6 @@ class OnReadingWindow(QWidget):
             self.init_booklist(constants.READING)
 
     def begin_read_pressed(self):
+        book_selected = self.books_list.currentRow()
+        self.book_selected_id = self.books[book_selected][0]
         self.begin_read_signal.emit(0)

@@ -45,5 +45,9 @@ class Database():
         self.book_list = self.conn.execute("SELECT * FROM BOOK WHERE FINISHED=?", (finished, )).fetchall()
         return self.book_list
 
+    def get_book(self, book_id):
+        print(str(book_id))
+        return self.conn.execute("SELECT TITLE FROM BOOK WHERE ID=?", (book_id, )).fetchone()[0]
+
     def get_count(self):
         return len(self.book_list)
