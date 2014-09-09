@@ -99,7 +99,7 @@ class OnReadingWindow(QWidget):
         self.read_time_label.setText(
                 "阅读时间：" + 
                 str(int(book[8]/3600)) + "小时" + 
-                str(int(book[8]/60)) + "分钟")
+                str(int(book[8]/60%60)) + "分钟")
 
     def give_up_pressed(self):
         current_selected = self.books_list.currentRow()
