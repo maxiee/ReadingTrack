@@ -87,7 +87,7 @@ class WndOnReadingOne(QWidget):
         #print("ouch!")
         self.reading_time_seconds.setText(str(int(self.second%60)))
         self.reading_time_minutes.setText(str(int(self.second/60%60)))
-        self.reading_time_hours.setText(str(int(self.second%3600)))
+        self.reading_time_hours.setText(str(int(self.second/3600)))
 
     def unfinished_pressed(self):
         read_time = self.my_db.get_read_time(self.book_id)
