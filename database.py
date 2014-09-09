@@ -49,5 +49,12 @@ class Database():
         print(str(book_id))
         return self.conn.execute("SELECT TITLE FROM BOOK WHERE ID=?", (book_id, )).fetchone()[0]
 
+    def get_read_time(self, book_id):
+        return self.conn.execute("SELECT READTIME FROM BOOK WHERE ID=?", (book_id,)).fetchone()[0]
+
+    def update_read_time(self, read_time, book_id):
+        self.conn.execute("UPDATE BOOK SET READTIME=? WHERE ID=?",(read_time, book_id,))
+        self.conn.commit()
+
     def get_count(self):
         return len(self.book_list)

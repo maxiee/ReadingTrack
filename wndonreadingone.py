@@ -28,6 +28,7 @@ class WndOnReadingOne(QWidget):
 
         book_finished_button = QPushButton("读完啦!")
         book_unfinished_button = QPushButton("读到这")
+        book_unfinished_button.clicked.connect(self.unfinished_pressed)
 
         # Init Layout
         main_layout = QVBoxLayout()
@@ -86,3 +87,9 @@ class WndOnReadingOne(QWidget):
         self.reading_time_seconds.setText(str(int(self.second)))
         self.reading_time_minutes.setText(str(int(self.second/60)))
         self.reading_time_hours.setText(str(int(self.second/3600)))
+
+    def unfinished_pressed(self):
+        read_time = self.my_db.get_read_time(self.book_id)
+        print(read_time)
+        read_time += self.second
+        self.my_db.update_read_time(read_time, self.book_id)
