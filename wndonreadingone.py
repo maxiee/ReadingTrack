@@ -4,11 +4,13 @@ from PyQt5.QtWidgets import *
 import constants
 import database
 import time
+from threading import Timer
 
 class WndOnReadingOne(QWidget):
     book_id = -1
     # Init database
     my_db = database.Database()
+    timer_update_signal = pyqtSignal()
 
     def __init__(self, parent = None):
         QWidget.__init__(self, parent)
@@ -63,6 +65,24 @@ class WndOnReadingOne(QWidget):
         # Set Layout
         self.setLayout(main_layout)
 
+        # 初始化定时器
+        self.timer = Timer(1, self.timer_update)
+        self.second = 0
+        self.timer_update_signal.connect(self.update_widgets)
+        self.timer.start()
+
     def init_book_title(self):
         self.title.setText(self.my_db.get_book(self.book_id))
         print(self.my_db.get_book(self.book_id))
+
+    def timer_update(self):
+        self.timer_update_signal.emit()
+        self.timer = Timer(1, self.timer_update)
+        self.timer.start()
+        self.second += 1
+
+    def update_widgets(self):
+        #print("ouch!")
+        self.reading_time_seconds.setText(str(int(self.second)))
+        self.reading_time_minutes.setText(str(int(self.second/60)))
+        self.reading_time_hours.setText(str(int(self.second/3600)))
