@@ -39,6 +39,7 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("正在阅读一本书")
         print("CCCCCCC" + str(book_selected_id))
         self.main_window = wndonreadingone.WndOnReadingOne(self)
+        self.main_window.read_here_signal[int].connect(self.switch_window)
         self.main_window.book_id = book_selected_id
         self.main_window.init_book_title()
         self.setCentralWidget(self.main_window)
@@ -57,6 +58,8 @@ class MainWindow(QMainWindow):
             if constants.DEBUG:
                 print("Book selected ID is: " + str(book_selected_id))
             self.on_reading_one_mode_selected(book_selected_id)
+        elif index == 1:
+            self.on_reading_mode_selected()
             
 
 if __name__ == '__main__':

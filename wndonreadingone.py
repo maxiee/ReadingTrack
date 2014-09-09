@@ -11,6 +11,7 @@ class WndOnReadingOne(QWidget):
     # Init database
     my_db = database.Database()
     timer_update_signal = pyqtSignal()
+    read_here_signal = pyqtSignal([int])
 
     def __init__(self, parent = None):
         QWidget.__init__(self, parent)
@@ -92,4 +93,6 @@ class WndOnReadingOne(QWidget):
         read_time = self.my_db.get_read_time(self.book_id)
         print(read_time)
         read_time += self.second
+        self.timer.cancel()
         self.my_db.update_read_time(read_time, self.book_id)
+        self.read_here_signal.emit(1)
