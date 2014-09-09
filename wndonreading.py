@@ -22,10 +22,10 @@ class OnReadingWindow(QWidget):
         self.books_list = QListWidget()
         self.books_list.currentRowChanged[int].connect(self.book_list_item_selected)
 
-        self.title_label = QLabel("Title:")
-        self.add_date_label = QLabel("Add date:")
-        self.page_count_label = QLabel("Page count:")
-        self.finish_date_label = QLabel("Finished date:")
+        self.title_label = QLabel("标题:")
+        self.add_date_label = QLabel("添加时间:")
+        self.page_count_label = QLabel("页数:")
+        self.read_time_label = QLabel("阅读时间:")
 
         self.giveup_button = QPushButton("放弃")
         self.giveup_button.clicked.connect(self.give_up_pressed)
@@ -43,6 +43,7 @@ class OnReadingWindow(QWidget):
         top_two.addWidget(self.title_label)
         top_two.addWidget(self.add_date_label)
         top_two.addWidget(self.page_count_label)
+        top_two.addWidget(self.read_time_label)
         self.top_two_group = QGroupBox("读书进度:")
         self.top_two_group.setLayout(top_two)
 
@@ -92,9 +93,13 @@ class OnReadingWindow(QWidget):
 
     def book_list_item_selected(self, index):
         book = self.books[index]
-        self.title_label.setText("Title: " + book[1])
-        self.add_date_label.setText("Add date: " + time.ctime(book[2]))
-        self.page_count_label.setText("Page count: " + str(book[3]))
+        self.title_label.setText("标题: " + book[1])
+        self.add_date_label.setText("添加时间: " + time.ctime(book[2]))
+        self.page_count_label.setText("页数: " + str(book[3]))
+        self.read_time_label.setText(
+                "阅读时间：" + 
+                str(int(book[8]/3600)) + "小时" + 
+                str(int(book[8]/60)) + "分钟")
 
     def give_up_pressed(self):
         current_selected = self.books_list.currentRow()
