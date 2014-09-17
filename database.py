@@ -41,6 +41,7 @@ class Database():
                 (time.time(), rank, review, self.book_list[index][0], ))
         self.conn.commit()
 
+    # finished参数:1已读书目，0未读数目
     def get_books(self, finished):
         self.book_list = self.conn.execute("SELECT * FROM BOOK WHERE FINISHED=?", (finished, )).fetchall()
         return self.book_list

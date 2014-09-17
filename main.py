@@ -4,22 +4,26 @@ from PyQt5.QtWidgets import *
 import wndonreading
 import wndhaveread
 import wndonreadingone
+import wndstatistics
 import constants
 
 class MainWindow(QMainWindow):
     def __init__(self, parent = None):
         QMainWindow.__init__(self, parent)
         
-        on_reading_action = QAction("On Reading", self)
+        on_reading_action = QAction("在读", self)
         on_reading_action.triggered.connect(self.on_reading_mode_selected)
-        have_read_action = QAction("Have Read", self)
+        have_read_action = QAction("已读", self)
         have_read_action.triggered.connect(self.have_read_mode_selected)
+        statistics_action = QAction("统计", self)
+        statistics_action.triggered.connect(self.statistics_mode_selected)
         
         self.statusBar().showMessage("Hello!")
 
         mode_menu = self.menuBar().addMenu("mode")
         mode_menu.addAction(on_reading_action)
         mode_menu.addAction(have_read_action)
+        mode_menu.addAction(statistics_action)
 
         #TODO: add a flag variable to indicate current window.
         #      prevent load the same window again.
@@ -49,6 +53,11 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Books have Read")
         self.main_window = wndhaveread.HaveReadWindow(self)
         self.statusBar().showMessage(self.main_window.get_status_message())
+        self.setCentralWidget(self.main_window)
+
+    def statistics_mode_selected(self):
+        self.setWindowTitle("阅读统计")
+        self.main_window = wndstatistics.WndStatistics(self)
         self.setCentralWidget(self.main_window)
 
     def switch_window(self, index):
