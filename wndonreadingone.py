@@ -4,7 +4,9 @@ from PyQt5.QtWidgets import *
 import constants
 import database
 import time
+import dlgfinish
 from threading import Timer
+
 
 class WndOnReadingOne(QWidget):
     book_id = -1
@@ -13,9 +15,9 @@ class WndOnReadingOne(QWidget):
     timer_update_signal = pyqtSignal()
     read_here_signal = pyqtSignal([int])
 
-    def __init__(self, parent = None):
+    def __init__(self, parent=None):
         QWidget.__init__(self, parent)
-    
+
         # UI Widgets
         title_label = QLabel("书名:")
         self.title = QLabel("")
@@ -28,6 +30,7 @@ class WndOnReadingOne(QWidget):
         self.reading_time_seconds = QLabel("00")
 
         book_finished_button = QPushButton("读完啦!")
+        book_finished_button.clicked.connect(self.finished_pressed)
         book_unfinished_button = QPushButton("读到这")
         book_unfinished_button.clicked.connect(self.unfinished_pressed)
 
@@ -75,7 +78,7 @@ class WndOnReadingOne(QWidget):
 
     def init_book_title(self):
         self.title.setText(self.my_db.get_book(self.book_id))
-        print(self.my_db.get_book(self.book_id))
+        print("开始读一本书，编号为:" + self.my_db.get_book(self.book_id))
 
     def timer_update(self):
         self.timer_update_signal.emit()
@@ -84,10 +87,10 @@ class WndOnReadingOne(QWidget):
         self.second += 1
 
     def update_widgets(self):
-        #print("ouch!")
-        self.reading_time_seconds.setText(str(int(self.second%60)))
-        self.reading_time_minutes.setText(str(int(self.second/60%60)))
-        self.reading_time_hours.setText(str(int(self.second/3600)))
+        # print("ouch!")
+        self.reading_time_seconds.setText(str(int(self.second % 60)))
+        self.reading_time_minutes.setText(str(int(self.second / 60 % 60)))
+        self.reading_time_hours.setText(str(int(self.second / 3600)))
 
     def unfinished_pressed(self):
         read_time = self.my_db.get_read_time(self.book_id)
@@ -96,3 +99,17 @@ class WndOnReadingOne(QWidget):
         self.timer.cancel()
         self.my_db.update_read_time(read_time, self.book_id)
         self.read_here_signal.emit(1)
+
+    def finished_pressed(self):
+        finish_dialog = dlgfinish.FinishDialog()
+        if finish_dialog.exec_() == QDialog.Accepted:
+            if constants.DEBUG:
+                # print("rank:" + str(finish_dialog.rank))
+                #print("review:" + finish_dialog.review)
+                print("[DEBUG]Current selected is " + str(self.book_id))
+            self.my_db.finished_read(
+                self.book_id,
+                finish_dialog.rank,
+                finish_dialog.review)
+            self.timer.cancel()
+            self.read_here_signal.emit(1)

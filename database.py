@@ -38,7 +38,7 @@ class Database():
     def finished_read(self, index, rank, review):
         self.conn.execute(
                 "UPDATE BOOK SET FINISHED=1, FINISHEDDATE=?, RANK=?, REVIEW=? WHERE rowid=?", 
-                (time.time(), rank, review, self.book_list[index][0], ))
+                (time.time(), rank, review, index, ))
         self.conn.commit()
 
     # finished参数:1已读书目，0未读数目

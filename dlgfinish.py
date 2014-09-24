@@ -39,5 +39,6 @@ class FinishDialog(QDialog):
         self.rank = int(self.rank_combo.currentText())
         self.review = self.review_edit.toPlainText()
         self.accept()
+
     def cancel_pressed(self):
         self.reject()
