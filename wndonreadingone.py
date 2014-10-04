@@ -98,7 +98,7 @@ class WndOnReadingOne(QWidget):
         read_time += self.second
         self.timer.cancel()
         self.my_db.update_read_time(read_time, self.book_id)
-        self.read_here_signal.emit(1)
+        self.read_here_signal.emit(constants.MODE_READING)
 
     def finished_pressed(self):
         finish_dialog = dlgfinish.FinishDialog()
@@ -112,4 +112,4 @@ class WndOnReadingOne(QWidget):
                 finish_dialog.rank,
                 finish_dialog.review)
             self.timer.cancel()
-            self.read_here_signal.emit(1)
+            self.read_here_signal.emit(constants.MODE_READING)

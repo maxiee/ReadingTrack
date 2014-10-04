@@ -53,7 +53,7 @@ class HaveReadWindow(QWidget):
         self.my_db = database.Database()
 
         # init
-        self.init_booklist(constants.READED)
+        self.init_booklist(constants.MODE_HAVE_READ)
 
     def init_booklist(self, finished):
         self.books = self.my_db.get_books(finished)
@@ -74,7 +74,7 @@ class HaveReadWindow(QWidget):
             #print("New title is:" + new_dlg.title)
             #print("It has :" + new_dlg.pages)
             self.my_db.insert_a_book(new_dlg.title, new_dlg.pages)
-            self.init_booklist(constants.READING)
+            self.init_booklist(constants.MODE_READING)
         else:
             print("New dialog Cancel!")
 

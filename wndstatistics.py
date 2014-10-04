@@ -12,7 +12,7 @@ class WndStatistics(QWidget):
         QWidget.__init__(self, parent)
         
         # Label: 已读书籍本数
-        books = self.my_db.get_books(constants.READED)
+        books = self.my_db.get_books(constants.MODE_HAVE_READ)
         have_read_label = QLabel("已读书籍"+str(len(books))+"本。")
 
         # 计算已读累计阅读时间
@@ -21,7 +21,7 @@ class WndStatistics(QWidget):
             time += book[8]
 
         # Label: 在读书籍本数
-        books = self.my_db.get_books(constants.READING)
+        books = self.my_db.get_books(constants.MODE_READING)
         on_reading_label = QLabel("在读书籍"+str(len(books))+"本。")
 
         # 计算在读累计阅读时间，加到time里

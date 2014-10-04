@@ -66,7 +66,7 @@ class OnReadingWindow(QWidget):
         self.my_db = database.Database()
 
         # init
-        self.init_booklist(constants.READING)
+        self.init_booklist(constants.MODE_READING)
 
     def init_booklist(self, finished):
         self.books = self.my_db.get_books(finished)
@@ -87,7 +87,7 @@ class OnReadingWindow(QWidget):
             #print("New title is:" + new_dlg.title)
             #print("It has :" + new_dlg.pages)
             self.my_db.insert_a_book(new_dlg.title, new_dlg.pages)
-            self.init_booklist(constants.READING)
+            self.init_booklist(constants.MODE_READING)
         else:
             print("New dialog Cancel!")
 
@@ -104,7 +104,7 @@ class OnReadingWindow(QWidget):
     def give_up_pressed(self):
         current_selected = self.books_list.currentRow()
         self.my_db.remove_a_book(current_selected)
-        self.init_booklist(constants.READING)
+        self.init_booklist(constants.MODE_READING)
 
     #TODO:remove this function
     def finish_pressed(self):
@@ -119,9 +119,9 @@ class OnReadingWindow(QWidget):
                     current_selected,
                     finish_dialog.rank,
                     finish_dialog.review)
-            self.init_booklist(constants.READING)
+            self.init_booklist(constants.MODE_READING)
 
     def begin_read_pressed(self):
         book_selected = self.books_list.currentRow()
         self.book_selected_id = self.books[book_selected][0]
-        self.begin_read_signal.emit(0)
+        self.begin_read_signal.emit(constants.MODE_READ_ONE)

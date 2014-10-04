@@ -31,7 +31,7 @@ class MainWindow(QMainWindow):
         self.on_reading_mode_selected()
 
     def on_reading_mode_selected(self):
-        # Set Title
+        """ Switch to on reading mode, which implemented in wndonreading.py"""
         self.setWindowTitle("Books on Reading")
         self.main_window = wndonreading.OnReadingWindow(self)
         self.main_window.begin_read_signal[int].connect(self.switch_window)
@@ -39,7 +39,7 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.main_window)
     
     def on_reading_one_mode_selected(self, book_selected_id):
-        # Set Title
+        """ Switch to reading one book mode, which implemented in wndonreadingone.py"""
         self.setWindowTitle("正在阅读一本书")
         print("CCCCCCC" + str(book_selected_id))
         self.main_window = wndonreadingone.WndOnReadingOne(self)
@@ -49,25 +49,26 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.main_window)
 
     def have_read_mode_selected(self):
-        # Set Title
+        """ Switch to books have read mode, which implemented in wndhaveread.py"""
         self.setWindowTitle("Books have Read")
         self.main_window = wndhaveread.HaveReadWindow(self)
         self.statusBar().showMessage(self.main_window.get_status_message())
         self.setCentralWidget(self.main_window)
 
     def statistics_mode_selected(self):
+        """ Switch to statistics mode, which implemented in wndstatistics.py"""
         self.setWindowTitle("阅读统计")
         self.main_window = wndstatistics.WndStatistics(self)
         self.setCentralWidget(self.main_window)
 
     def switch_window(self, index):
         print("Ouch! WTF!!!!")
-        if index == 0:
+        if index == constants.MODE_READ_ONE:
             book_selected_id = self.main_window.book_selected_id
             if constants.DEBUG:
                 print("Book selected ID is: " + str(book_selected_id))
             self.on_reading_one_mode_selected(book_selected_id)
-        elif index == 1:
+        elif index == constants.MODE_READING:
             self.on_reading_mode_selected()
             
 
